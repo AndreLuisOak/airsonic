@@ -1,82 +1,70 @@
 package org.airsonic.player.command;
 
-import org.airsonic.player.spring.DataSourceConfigType;
-
 import javax.validation.constraints.NotNull;
 
+import org.airsonic.player.spring.DataSourceConfigType;
+
+/**
+ * DTO for database configuration. Refatorado para Builder Pattern.
+ */
 public class DatabaseSettingsCommand {
 
     @NotNull
-    private DataSourceConfigType configType;
-    private String embedDriver;
-    private String embedPassword;
-    private String embedUrl;
-    private String embedUsername;
-    private String JNDIName;
-    private int mysqlVarcharMaxlength;
-    private String usertableQuote;
+    private final DataSourceConfigType configType;
+    private final String embedDriver;
+    private final String embedPassword;
+    private final String embedUrl;
+    private final String embedUsername;
+    private final String JNDIName;
+    private final int mysqlVarcharMaxlength;
+    private final String usertableQuote;
 
-    public DataSourceConfigType getConfigType() {
-        return configType;
+    private DatabaseSettingsCommand(Builder b) {
+        this.configType = b.configType;
+        this.embedDriver = b.embedDriver;
+        this.embedPassword = b.embedPassword;
+        this.embedUrl = b.embedUrl;
+        this.embedUsername = b.embedUsername;
+        this.JNDIName = b.JNDIName;
+        this.mysqlVarcharMaxlength = b.mysqlVarcharMaxlength;
+        this.usertableQuote = b.usertableQuote;
     }
 
-    public void setConfigType(DataSourceConfigType configType) {
-        this.configType = configType;
-    }
+    public DataSourceConfigType getConfigType() { return configType; }
+    public String getEmbedDriver() { return embedDriver; }
+    public String getEmbedPassword() { return embedPassword; }
+    public String getEmbedUrl() { return embedUrl; }
+    public String getEmbedUsername() { return embedUsername; }
+    public String getJNDIName() { return JNDIName; }
+    public int getMysqlVarcharMaxlength() { return mysqlVarcharMaxlength; }
+    public String getUsertableQuote() { return usertableQuote; }
 
-    public String getEmbedDriver() {
-        return embedDriver;
-    }
+    public static Builder builder() { return new Builder(); }
 
-    public void setEmbedDriver(String embedDriver) {
-        this.embedDriver = embedDriver;
-    }
+    public static class Builder {
+        private DataSourceConfigType configType;
+        private String embedDriver;
+        private String embedPassword;
+        private String embedUrl;
+        private String embedUsername;
+        private String JNDIName;
+        private int mysqlVarcharMaxlength;
+        private String usertableQuote;
 
-    public String getEmbedPassword() {
-        return embedPassword;
-    }
+        public Builder configType(DataSourceConfigType v) { this.configType = v; return this; }
+        public Builder embedDriver(String v) { this.embedDriver = v; return this; }
+        public Builder embedPassword(String v) { this.embedPassword = v; return this; }
+        public Builder embedUrl(String v) { this.embedUrl = v; return this; }
+        public Builder embedUsername(String v) { this.embedUsername = v; return this; }
+        public Builder JNDIName(String v) { this.JNDIName = v; return this; }
+        public Builder mysqlVarcharMaxlength(int v) { this.mysqlVarcharMaxlength = v; return this; }
+        public Builder usertableQuote(String v) { this.usertableQuote = v; return this; }
 
-    public void setEmbedPassword(String embedPassword) {
-        this.embedPassword = embedPassword;
-    }
-
-    public String getEmbedUrl() {
-        return embedUrl;
-    }
-
-    public void setEmbedUrl(String embedUrl) {
-        this.embedUrl = embedUrl;
-    }
-
-    public String getEmbedUsername() {
-        return embedUsername;
-    }
-
-    public void setEmbedUsername(String embedUsername) {
-        this.embedUsername = embedUsername;
-    }
-
-    public String getJNDIName() {
-        return JNDIName;
-    }
-
-    public void setJNDIName(String JNDIName) {
-        this.JNDIName = JNDIName;
-    }
-
-    public int getMysqlVarcharMaxlength() {
-        return mysqlVarcharMaxlength;
-    }
-
-    public void setMysqlVarcharMaxlength(int mysqlVarcharMaxlength) {
-        this.mysqlVarcharMaxlength = mysqlVarcharMaxlength;
-    }
-
-    public String getUsertableQuote() {
-        return usertableQuote;
-    }
-
-    public void setUsertableQuote(String usertableQuote) {
-        this.usertableQuote = usertableQuote;
+        public DatabaseSettingsCommand build() {
+            if (this.configType == null) {
+                throw new IllegalStateException("configType is required");
+            }
+            return new DatabaseSettingsCommand(this);
+        }
     }
 }

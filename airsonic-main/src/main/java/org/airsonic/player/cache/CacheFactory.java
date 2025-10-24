@@ -19,35 +19,24 @@
  */
 package org.airsonic.player.cache;
 
-import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.config.Configuration;
-import net.sf.ehcache.config.ConfigurationFactory;
-import org.airsonic.player.service.SettingsService;
-import org.springframework.beans.factory.InitializingBean;
-
-import java.io.File;
+import org.airsonic.player.cache.strategy.CacheStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
- * Initializes Ehcache and creates caches.
- *
- * @author Sindre Mehus
- * @version $Id$
+ * Facade/Factory que delega a criação/recuperação de caches para a estratégia injetada.
  */
-public class CacheFactory implements InitializingBean {
-    private CacheManager cacheManager;
+@Component
+public class CacheFactory {
+    private final CacheStrategy cacheStrategy;
 
-    public void afterPropertiesSet() {
-        Configuration configuration = ConfigurationFactory.parseConfiguration();
-
-        // Override configuration to make sure cache is stored in Airsonic home dir.
-        File cacheDir = new File(SettingsService.getAirsonicHome(), "cache");
-        configuration.getDiskStoreConfiguration().setPath(cacheDir.getPath());
-
-        cacheManager = CacheManager.create(configuration);
+    @Autowired
+    public CacheFactory(CacheStrategy cacheStrategy) {
+        this.cacheStrategy = cacheStrategy;
     }
 
     public Ehcache getCache(String name) {
-        return cacheManager.getCache(name);
+        return cacheStrategy.createCache(name);
     }
 }

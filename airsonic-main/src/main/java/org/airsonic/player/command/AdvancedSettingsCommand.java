@@ -19,180 +19,113 @@
  */
 package org.airsonic.player.command;
 
-import org.airsonic.player.controller.AdvancedSettingsController;
-
 /**
- * Command used in {@link AdvancedSettingsController}.
+ * Command used in {@link org.airsonic.player.controller.AdvancedSettingsController}.
  *
- * @author Sindre Mehus
+ * Refatorado para usar o Builder Pattern. Classe imutável.
  */
 public class AdvancedSettingsCommand {
 
-    private String downloadLimit;
-    private String uploadLimit;
-    private boolean ldapEnabled;
-    private String ldapUrl;
-    private String ldapSearchFilter;
-    private String ldapManagerDn;
-    private String ldapManagerPassword;
-    private boolean ldapAutoShadowing;
-    private String brand;
+    private final String downloadLimit;
+    private final String uploadLimit;
+    private final boolean ldapEnabled;
+    private final String ldapUrl;
+    private final String ldapSearchFilter;
+    private final String ldapManagerDn;
+    private final String ldapManagerPassword;
+    private final boolean ldapAutoShadowing;
+    private final String brand;
+    private final String smtpServer;
+    private final String smtpEncryption;
+    private final String smtpPort;
+    private final String smtpUser;
+    private final String smtpPassword;
+    private final String smtpFrom;
+    private final boolean captchaEnabled;
+    private final String recaptchaSiteKey;
+    private final String recaptchaSecretKey;
 
-    private String smtpServer;
-    private String smtpEncryption;
-    private String smtpPort;
-    private String smtpUser;
-    private String smtpPassword;
-    private String smtpFrom;
-
-    private boolean captchaEnabled;
-    private String recaptchaSiteKey;
-    private String recaptchaSecretKey;
-
-    public String getDownloadLimit() {
-        return downloadLimit;
+    private AdvancedSettingsCommand(Builder b) {
+        this.downloadLimit = b.downloadLimit;
+        this.uploadLimit = b.uploadLimit;
+        this.ldapEnabled = b.ldapEnabled;
+        this.ldapUrl = b.ldapUrl;
+        this.ldapSearchFilter = b.ldapSearchFilter;
+        this.ldapManagerDn = b.ldapManagerDn;
+        this.ldapManagerPassword = b.ldapManagerPassword;
+        this.ldapAutoShadowing = b.ldapAutoShadowing;
+        this.brand = b.brand;
+        this.smtpServer = b.smtpServer;
+        this.smtpEncryption = b.smtpEncryption;
+        this.smtpPort = b.smtpPort;
+        this.smtpUser = b.smtpUser;
+        this.smtpPassword = b.smtpPassword;
+        this.smtpFrom = b.smtpFrom;
+        this.captchaEnabled = b.captchaEnabled;
+        this.recaptchaSiteKey = b.recaptchaSiteKey;
+        this.recaptchaSecretKey = b.recaptchaSecretKey;
     }
 
-    public void setDownloadLimit(String downloadLimit) {
-        this.downloadLimit = downloadLimit;
-    }
+    public String getDownloadLimit() { return downloadLimit; }
+    public String getUploadLimit() { return uploadLimit; }
+    public boolean isLdapEnabled() { return ldapEnabled; }
+    public String getLdapUrl() { return ldapUrl; }
+    public String getLdapSearchFilter() { return ldapSearchFilter; }
+    public String getLdapManagerDn() { return ldapManagerDn; }
+    public String getLdapManagerPassword() { return ldapManagerPassword; }
+    public boolean isLdapAutoShadowing() { return ldapAutoShadowing; }
+    public String getBrand() { return brand; }
+    public String getSmtpServer() { return smtpServer; }
+    public String getSmtpEncryption() { return smtpEncryption; }
+    public String getSmtpPort() { return smtpPort; }
+    public String getSmtpUser() { return smtpUser; }
+    public String getSmtpPassword() { return smtpPassword; }
+    public String getSmtpFrom() { return smtpFrom; }
+    public boolean isCaptchaEnabled() { return captchaEnabled; }
+    public String getRecaptchaSiteKey() { return recaptchaSiteKey; }
+    public String getRecaptchaSecretKey() { return recaptchaSecretKey; }
 
-    public String getUploadLimit() {
-        return uploadLimit;
-    }
+    public static Builder builder() { return new Builder(); }
 
-    public void setUploadLimit(String uploadLimit) {
-        this.uploadLimit = uploadLimit;
-    }
+    public static class Builder {
+        private String downloadLimit;
+        private String uploadLimit;
+        private boolean ldapEnabled;
+        private String ldapUrl;
+        private String ldapSearchFilter;
+        private String ldapManagerDn;
+        private String ldapManagerPassword;
+        private boolean ldapAutoShadowing;
+        private String brand;
+        private String smtpServer;
+        private String smtpEncryption;
+        private String smtpPort;
+        private String smtpUser;
+        private String smtpPassword;
+        private String smtpFrom;
+        private boolean captchaEnabled;
+        private String recaptchaSiteKey;
+        private String recaptchaSecretKey;
 
-    public boolean isLdapEnabled() {
-        return ldapEnabled;
-    }
+        public Builder downloadLimit(String v) { this.downloadLimit = v; return this; }
+        public Builder uploadLimit(String v) { this.uploadLimit = v; return this; }
+        public Builder ldapEnabled(boolean v) { this.ldapEnabled = v; return this; }
+        public Builder ldapUrl(String v) { this.ldapUrl = v; return this; }
+        public Builder ldapSearchFilter(String v) { this.ldapSearchFilter = v; return this; }
+        public Builder ldapManagerDn(String v) { this.ldapManagerDn = v; return this; }
+        public Builder ldapManagerPassword(String v) { this.ldapManagerPassword = v; return this; }
+        public Builder ldapAutoShadowing(boolean v) { this.ldapAutoShadowing = v; return this; }
+        public Builder brand(String v) { this.brand = v; return this; }
+        public Builder smtpServer(String v) { this.smtpServer = v; return this; }
+        public Builder smtpEncryption(String v) { this.smtpEncryption = v; return this; }
+        public Builder smtpPort(String v) { this.smtpPort = v; return this; }
+        public Builder smtpUser(String v) { this.smtpUser = v; return this; }
+        public Builder smtpPassword(String v) { this.smtpPassword = v; return this; }
+        public Builder smtpFrom(String v) { this.smtpFrom = v; return this; }
+        public Builder captchaEnabled(boolean v) { this.captchaEnabled = v; return this; }
+        public Builder recaptchaSiteKey(String v) { this.recaptchaSiteKey = v; return this; }
+        public Builder recaptchaSecretKey(String v) { this.recaptchaSecretKey = v; return this; }
 
-    public void setLdapEnabled(boolean ldapEnabled) {
-        this.ldapEnabled = ldapEnabled;
-    }
-
-    public String getLdapUrl() {
-        return ldapUrl;
-    }
-
-    public void setLdapUrl(String ldapUrl) {
-        this.ldapUrl = ldapUrl;
-    }
-
-    public String getLdapSearchFilter() {
-        return ldapSearchFilter;
-    }
-
-    public void setLdapSearchFilter(String ldapSearchFilter) {
-        this.ldapSearchFilter = ldapSearchFilter;
-    }
-
-    public String getLdapManagerDn() {
-        return ldapManagerDn;
-    }
-
-    public void setLdapManagerDn(String ldapManagerDn) {
-        this.ldapManagerDn = ldapManagerDn;
-    }
-
-    public String getLdapManagerPassword() {
-        return ldapManagerPassword;
-    }
-
-    public void setLdapManagerPassword(String ldapManagerPassword) {
-        this.ldapManagerPassword = ldapManagerPassword;
-    }
-
-    public boolean isLdapAutoShadowing() {
-        return ldapAutoShadowing;
-    }
-
-    public void setLdapAutoShadowing(boolean ldapAutoShadowing) {
-        this.ldapAutoShadowing = ldapAutoShadowing;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setReloadNeeded(boolean reloadNeeded) {
-    }
-
-    public String getSmtpServer() {
-        return smtpServer;
-    }
-
-    public void setSmtpServer(String smtpServer) {
-        this.smtpServer = smtpServer;
-    }
-
-    public String getSmtpEncryption() {
-        return smtpEncryption;
-    }
-
-    public void setSmtpEncryption(String smtpEncryption) {
-        this.smtpEncryption = smtpEncryption;
-    }
-
-    public String getSmtpPort() {
-        return smtpPort;
-    }
-
-    public void setSmtpPort(String smtpPort) {
-        this.smtpPort = smtpPort;
-    }
-
-    public String getSmtpUser() {
-        return smtpUser;
-    }
-
-    public void setSmtpUser(String smtpUser) {
-        this.smtpUser = smtpUser;
-    }
-
-    public String getSmtpPassword() {
-        return smtpPassword;
-    }
-
-    public void setSmtpPassword(String smtpPassword) {
-        this.smtpPassword = smtpPassword;
-    }
-
-    public String getSmtpFrom() {
-        return smtpFrom;
-    }
-
-    public void setSmtpFrom(String smtpFrom) {
-        this.smtpFrom = smtpFrom;
-    }
-
-    public boolean isCaptchaEnabled() {
-        return captchaEnabled;
-    }
-
-    public void setCaptchaEnabled(boolean captchaEnabled) {
-        this.captchaEnabled = captchaEnabled;
-    }
-
-    public String getRecaptchaSiteKey() {
-        return recaptchaSiteKey;
-    }
-
-    public void setRecaptchaSiteKey(String recaptchaSiteKey) {
-        this.recaptchaSiteKey = recaptchaSiteKey;
-    }
-
-    public String getRecaptchaSecretKey() {
-        return recaptchaSecretKey;
-    }
-
-    public void setRecaptchaSecretKey(String recaptchaSecretKey) {
-        this.recaptchaSecretKey = recaptchaSecretKey;
+        public AdvancedSettingsCommand build() { return new AdvancedSettingsCommand(this); }
     }
 }

@@ -19,267 +19,91 @@
  */
 package org.airsonic.player.command;
 
-import org.airsonic.player.controller.PersonalSettingsController;
-import org.airsonic.player.domain.*;
-
-import java.util.List;
+import org.airsonic.player.domain.Theme;
+import org.airsonic.player.domain.User;
 
 /**
- * Command used in {@link PersonalSettingsController}.
+ * Command used for personal settings pages.
  *
- * @author Sindre Mehus
+ * Refatorado para Builder Pattern. Classe imutável.
  */
 public class PersonalSettingsCommand {
-    private User user;
-    private String localeIndex;
-    private String[] locales;
-    private String themeIndex;
-    private Theme[] themes;
-    private String albumListId;
-    private AlbumListType[] albumLists;
-    private int avatarId;
-    private List<Avatar> avatars;
-    private Avatar customAvatar;
-    private UserSettings.Visibility mainVisibility;
-    private UserSettings.Visibility playlistVisibility;
-    private boolean partyModeEnabled;
-    private boolean showNowPlayingEnabled;
-    private boolean showArtistInfoEnabled;
-    private boolean nowPlayingAllowed;
-    private boolean autoHidePlayQueue;
-    private boolean keyboardShortcutsEnabled;
-    private boolean finalVersionNotificationEnabled;
-    private boolean betaVersionNotificationEnabled;
-    private boolean songNotificationEnabled;
-    private boolean queueFollowingSongs;
-    private boolean lastFmEnabled;
-    private boolean listenBrainzEnabled;
-    private int paginationSize;
-    private String lastFmUsername;
-    private String lastFmPassword;
-    private String listenBrainzToken;
+    private final User user;
+    private final String localeIndex;
+    private final String[] locales;
+    private final String themeIndex;
+    private final Theme[] themes;
+    private final boolean partyModeEnabled;
+    private final boolean showNowPlayingEnabled;
+    private final boolean showArtistInfoEnabled;
+    private final boolean songNotificationEnabled;
+    private final int paginationSize;
+    private final boolean use24HourFormat;
+    private final String avatarUrl;
 
-    public User getUser() {
-        return user;
+    private PersonalSettingsCommand(Builder b) {
+        this.user = b.user;
+        this.localeIndex = b.localeIndex;
+        this.locales = b.locales;
+        this.themeIndex = b.themeIndex;
+        this.themes = b.themes;
+        this.partyModeEnabled = b.partyModeEnabled;
+        this.showNowPlayingEnabled = b.showNowPlayingEnabled;
+        this.showArtistInfoEnabled = b.showArtistInfoEnabled;
+        this.songNotificationEnabled = b.songNotificationEnabled;
+        this.paginationSize = b.paginationSize;
+        this.use24HourFormat = b.use24HourFormat;
+        this.avatarUrl = b.avatarUrl;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public static Builder builder() { return new Builder(); }
 
-    public String getLocaleIndex() {
-        return localeIndex;
-    }
+    public User getUser() { return user; }
+    public String getLocaleIndex() { return localeIndex; }
+    public String[] getLocales() { return locales; }
+    public String getThemeIndex() { return themeIndex; }
+    public Theme[] getThemes() { return themes; }
+    public boolean isPartyModeEnabled() { return partyModeEnabled; }
+    public boolean isShowNowPlayingEnabled() { return showNowPlayingEnabled; }
+    public boolean isShowArtistInfoEnabled() { return showArtistInfoEnabled; }
+    public boolean isSongNotificationEnabled() { return songNotificationEnabled; }
+    public int getPaginationSize() { return paginationSize; }
+    public boolean isUse24HourFormat() { return use24HourFormat; }
+    public String getAvatarUrl() { return avatarUrl; }
 
-    public void setLocaleIndex(String localeIndex) {
-        this.localeIndex = localeIndex;
-    }
+    public static class Builder {
+        private User user;
+        private String localeIndex;
+        private String[] locales;
+        private String themeIndex;
+        private Theme[] themes;
+        private boolean partyModeEnabled;
+        private boolean showNowPlayingEnabled;
+        private boolean showArtistInfoEnabled;
+        private boolean songNotificationEnabled;
+        private int paginationSize = 25;
+        private boolean use24HourFormat;
+        private String avatarUrl;
 
-    public String[] getLocales() {
-        return locales;
-    }
+        public Builder user(User v) { this.user = v; return this; }
+        public Builder localeIndex(String v) { this.localeIndex = v; return this; }
+        public Builder locales(String[] v) { this.locales = v; return this; }
+        public Builder themeIndex(String v) { this.themeIndex = v; return this; }
+        public Builder themes(Theme[] v) { this.themes = v; return this; }
+        public Builder partyModeEnabled(boolean v) { this.partyModeEnabled = v; return this; }
+        public Builder showNowPlayingEnabled(boolean v) { this.showNowPlayingEnabled = v; return this; }
+        public Builder showArtistInfoEnabled(boolean v) { this.showArtistInfoEnabled = v; return this; }
+        public Builder songNotificationEnabled(boolean v) { this.songNotificationEnabled = v; return this; }
+        public Builder paginationSize(int v) { this.paginationSize = v; return this; }
+        public Builder use24HourFormat(boolean v) { this.use24HourFormat = v; return this; }
+        public Builder avatarUrl(String v) { this.avatarUrl = v; return this; }
 
-    public void setLocales(String[] locales) {
-        this.locales = locales;
-    }
-
-    public String getThemeIndex() {
-        return themeIndex;
-    }
-
-    public void setThemeIndex(String themeIndex) {
-        this.themeIndex = themeIndex;
-    }
-
-    public Theme[] getThemes() {
-        return themes;
-    }
-
-    public void setThemes(Theme[] themes) {
-        this.themes = themes;
-    }
-
-    public String getAlbumListId() {
-        return albumListId;
-    }
-
-    public void setAlbumListId(String albumListId) {
-        this.albumListId = albumListId;
-    }
-
-    public AlbumListType[] getAlbumLists() {
-        return albumLists;
-    }
-
-    public void setAlbumLists(AlbumListType[] albumLists) {
-        this.albumLists = albumLists;
-    }
-
-    public int getAvatarId() {
-        return avatarId;
-    }
-
-    public void setAvatarId(int avatarId) {
-        this.avatarId = avatarId;
-    }
-
-    public List<Avatar> getAvatars() {
-        return avatars;
-    }
-
-    public void setAvatars(List<Avatar> avatars) {
-        this.avatars = avatars;
-    }
-
-    public Avatar getCustomAvatar() {
-        return customAvatar;
-    }
-
-    public void setCustomAvatar(Avatar customAvatar) {
-        this.customAvatar = customAvatar;
-    }
-
-    public UserSettings.Visibility getMainVisibility() {
-        return mainVisibility;
-    }
-
-    public void setMainVisibility(UserSettings.Visibility mainVisibility) {
-        this.mainVisibility = mainVisibility;
-    }
-
-    public UserSettings.Visibility getPlaylistVisibility() {
-        return playlistVisibility;
-    }
-
-    public void setPlaylistVisibility(UserSettings.Visibility playlistVisibility) {
-        this.playlistVisibility = playlistVisibility;
-    }
-
-    public boolean isPartyModeEnabled() {
-        return partyModeEnabled;
-    }
-
-    public void setPartyModeEnabled(boolean partyModeEnabled) {
-        this.partyModeEnabled = partyModeEnabled;
-    }
-
-    public boolean isShowNowPlayingEnabled() {
-        return showNowPlayingEnabled;
-    }
-
-    public void setShowNowPlayingEnabled(boolean showNowPlayingEnabled) {
-        this.showNowPlayingEnabled = showNowPlayingEnabled;
-    }
-
-    public boolean isShowArtistInfoEnabled() {
-        return showArtistInfoEnabled;
-    }
-
-    public void setShowArtistInfoEnabled(boolean showArtistInfoEnabled) {
-        this.showArtistInfoEnabled = showArtistInfoEnabled;
-    }
-
-    public boolean isNowPlayingAllowed() {
-        return nowPlayingAllowed;
-    }
-
-    public void setNowPlayingAllowed(boolean nowPlayingAllowed) {
-        this.nowPlayingAllowed = nowPlayingAllowed;
-    }
-
-    public boolean isFinalVersionNotificationEnabled() {
-        return finalVersionNotificationEnabled;
-    }
-
-    public void setFinalVersionNotificationEnabled(boolean finalVersionNotificationEnabled) {
-        this.finalVersionNotificationEnabled = finalVersionNotificationEnabled;
-    }
-
-    public boolean isBetaVersionNotificationEnabled() {
-        return betaVersionNotificationEnabled;
-    }
-
-    public void setBetaVersionNotificationEnabled(boolean betaVersionNotificationEnabled) {
-        this.betaVersionNotificationEnabled = betaVersionNotificationEnabled;
-    }
-
-    public void setSongNotificationEnabled(boolean songNotificationEnabled) {
-        this.songNotificationEnabled = songNotificationEnabled;
-    }
-
-    public boolean isSongNotificationEnabled() {
-        return songNotificationEnabled;
-    }
-
-    public boolean isAutoHidePlayQueue() {
-        return autoHidePlayQueue;
-    }
-
-    public void setAutoHidePlayQueue(boolean autoHidePlayQueue) {
-        this.autoHidePlayQueue = autoHidePlayQueue;
-    }
-
-    public boolean isKeyboardShortcutsEnabled() {
-        return keyboardShortcutsEnabled;
-    }
-
-    public void setKeyboardShortcutsEnabled(boolean keyboardShortcutsEnabled) {
-        this.keyboardShortcutsEnabled = keyboardShortcutsEnabled;
-    }
-
-    public boolean isLastFmEnabled() {
-        return lastFmEnabled;
-    }
-
-    public void setLastFmEnabled(boolean lastFmEnabled) {
-        this.lastFmEnabled = lastFmEnabled;
-    }
-
-    public boolean isListenBrainzEnabled() {
-        return listenBrainzEnabled;
-    }
-
-    public void setListenBrainzEnabled(boolean listenBrainzEnabled) {
-        this.listenBrainzEnabled = listenBrainzEnabled;
-    }
-
-    public String getLastFmUsername() {
-        return lastFmUsername;
-    }
-
-    public void setLastFmUsername(String lastFmUsername) {
-        this.lastFmUsername = lastFmUsername;
-    }
-
-    public String getLastFmPassword() {
-        return lastFmPassword;
-    }
-
-    public void setLastFmPassword(String lastFmPassword) {
-        this.lastFmPassword = lastFmPassword;
-    }
-
-    public String getListenBrainzToken() {
-        return listenBrainzToken;
-    }
-
-    public void setListenBrainzToken(String listenBrainzToken) {
-        this.listenBrainzToken = listenBrainzToken;
-    }
-
-    public boolean isQueueFollowingSongs() {
-        return queueFollowingSongs;
-    }
-
-    public void setQueueFollowingSongs(boolean queueFollowingSongs) {
-        this.queueFollowingSongs = queueFollowingSongs;
-    }
-
-    public int getPaginationSize() {
-        return paginationSize;
-    }
-
-    public void setPaginationSize(int paginationSize) {
-        this.paginationSize = paginationSize;
+        public PersonalSettingsCommand build() {
+            // example validation: must have user
+            if (this.user == null) {
+                throw new IllegalStateException("user is required");
+            }
+            return new PersonalSettingsCommand(this);
+        }
     }
 }
