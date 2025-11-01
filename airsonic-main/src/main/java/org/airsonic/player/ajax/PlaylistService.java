@@ -27,6 +27,7 @@ import org.airsonic.player.domain.Playlist;
 import org.airsonic.player.i18n.LocaleResolver;
 import org.airsonic.player.service.MediaFileService;
 import org.airsonic.player.service.PlayerService;
+import org.airsonic.player.ajax.PlaylistCreationStrategy;
 import org.airsonic.player.service.SecurityService;
 import org.airsonic.player.service.SettingsService;
 import org.directwebremoting.WebContextFactory;
