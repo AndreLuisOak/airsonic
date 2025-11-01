@@ -39,26 +39,21 @@ import java.util.Map;
  *
  * @author Sindre Mehus
  */
-@Controller
-@RequestMapping("/playlists")
-public class PlaylistsController {
+@RestController
+@RequestMapping("/api/playlist")
+public class PlaylistController {
+
+    private final PlaylistService playlistService; // agora o foco está aqui
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private PlaylistService playlistService;
-
-    @GetMapping
-    public String doGet(HttpServletRequest request, Model model) {
-        Map<String, Object> map = new HashMap<>();
-
-        User user = securityService.getCurrentUser(request);
-        List<Playlist> playlists = playlistService.getReadablePlaylistsForUser(user.getUsername());
-
-        map.put("playlists", playlists);
-        model.addAttribute("model", map);
-        return "playlists";
+    public PlaylistController(PlaylistService playlistService) {
+        this.playlistService = playlistService;
     }
 
+    @PostMapping("/{id}/add")
+    public ResponseEntity<Void> addToPlaylist(@PathVariable int id, @RequestBody List<Integer> mediaFileIds) {
+        playlistService.appendToPlaylist(id, mediaFileIds);
+        return ResponseEntity.ok().build();
+    }
 }
+
