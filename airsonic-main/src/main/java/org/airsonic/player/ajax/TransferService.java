@@ -26,7 +26,9 @@ import org.springframework.stereotype.Service;
 
 /**
  * Provides AJAX-enabled services for retrieving the status of ongoing transfers.
- * Refactored using the Adapter pattern to decouple session access logic.
+ * This class is used by the DWR framework (http://getahead.ltd.uk/dwr/).
+ *
+ * @author Sindre Mehus
  */
 @Service("ajaxTransferService")
 public class TransferService {
