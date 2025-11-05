@@ -80,3 +80,7 @@ We have several places outside of github for community discussion, questions, et
 - [airsonic subreddit](https://www.reddit.com/r/airsonic)
 
 *Note that the Matrix room and IRC channel are bridged together.*
+
+
+Relatório de Refatoração de Código Para a Disciplina de Reuso
+[Relatório Técnico Reuso.pdf](https://github.com/user-attachments/files/23377367/Relatorio.Tecnico.Reuso.pdf)
