@@ -24,9 +24,6 @@ import org.airsonic.player.cache.strategy.CacheStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Facade/Factory que delega a criação/recuperação de caches para a estratégia injetada.
- */
 @Component
 public class CacheFactory {
     private final CacheStrategy cacheStrategy;
