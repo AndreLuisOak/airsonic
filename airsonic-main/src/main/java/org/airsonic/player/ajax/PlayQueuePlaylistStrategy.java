@@ -1,15 +1,16 @@
 package org.airsonic.player.ajax;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.airsonic.player.domain.Playlist;
-import org.airsonic.player.domain.Player;
-import org.airsonic.player.service.PlayerService;
-import org.directwebremoting.WebContextFactory;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
+
+import org.airsonic.player.domain.Player;
+import org.airsonic.player.domain.Playlist;
+import org.airsonic.player.service.PlayerService;
+import org.directwebremoting.WebContextFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("playQueuePlaylistStrategy")
 public class PlayQueuePlaylistStrategy implements PlaylistCreationStrategy {
@@ -23,7 +24,11 @@ public class PlayQueuePlaylistStrategy implements PlaylistCreationStrategy {
     public Playlist createPlaylist(String username) {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
-        Player player = playerService.getPlayer(request, response);
+        Player player = null;
+        try {
+            player = playerService.getPlayer(request, response);
+        } catch (Exception ex) {
+        }
 
         Playlist playlist = new Playlist();
         Date now = new Date();
